@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peterson Property Portfolio | Project Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #34495e;
+            --warm-blue: #5dade2;
+            --accent-gold: #f4f1de;
+            --warm-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --charcoal: #2c3e50;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --progress-orange: #f39c12;
+            --assessment-blue: #3498db;
+            --border-radius: 12px;
+            --shadow: 0 8px 25px rgba(52, 73, 94, 0.15);
+            --shadow-hover: 0 12px 40px rgba(52, 73, 94, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif Pro', serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--accent-gold) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .portfolio-header {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 50px 40px;
+            margin-bottom: 50px;
+            border-left: 8px solid var(--warm-blue);
+            text-align: center;
+        }
+
+        .portfolio-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+        }
+
+        .portfolio-subtitle {
+            font-size: 1.4rem;
+            color: var(--warm-gray);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .portfolio-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px solid var(--light-gray);
+        }
+
+        .meta-stat {
+            text-align: center;
+        }
+
+        .meta-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--warm-blue);
+            display: block;
+        }
+
+        .meta-label {
+            font-size: 1rem;
+            color: var(--warm-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 5px;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background: var(--primary-navy);
+            border-radius: var(--border-radius);
+            padding: 20px 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--warm-blue);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid var(--warm-blue);
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-icon {
+            font-size: 2rem;
+            color: var(--warm-blue);
+        }
+
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--warm-gray);
+            margin-left: auto;
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--warm-blue);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-gray) 0%, #d5dbdb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 15px,
+                rgba(93, 173, 226, 0.1) 15px,
+                rgba(93, 173, 226, 0.1) 30px
+            );
+            animation: subtle-move 25s linear infinite;
+        }
+
+        @keyframes subtle-move {
+            0% { transform: translateX(-60px) translateY(-60px); }
+            100% { transform: translateX(0px) translateY(0px); }
+        }
+
+        .project-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--warm-gray);
+            z-index: 1;
+        }
+
+        .project-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-address {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+        }
+
+        .project-types {
+            margin-bottom: 15px;
+        }
+
+        .project-type-tag {
+            display: inline-block;
+            background: var(--warm-blue);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .project-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-completed { background: var(--success-green); }
+        .status-progress { background: var(--progress-orange); }
+        .status-assessment { background: var(--assessment-blue); }
+
+        .status-text {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 2px solid var(--light-gray);
+            font-size: 0.9rem;
+            color: var(--warm-gray);
+        }
+
+        .project-photos {
+            font-weight: 600;
+        }
+
+        .project-date {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Empty State */
+        .empty-section {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 60px 40px;
+            text-align: center;
+            border: 3px dashed var(--light-gray);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--warm-gray);
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 1.3rem;
+            color: var(--warm-gray);
+            margin-bottom: 10px;
+        }
+
+        .empty-subtitle {
+            color: var(--warm-gray);
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .portfolio-footer {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 50px 40px;
+            border-radius: var(--border-radius);
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .footer-info h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--warm-blue);
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+            font-size: 1.1rem;
+        }
+
+        .footer-description {
+            line-height: 1.7;
+            color: var(--light-gray);
+        }
+
+        .footer-contact {
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 15px;
+            color: var(--warm-blue);
+            font-size: 1.2rem;
+        }
+
+        .footer-contact p {
+            margin-bottom: 8px;
+            color: var(--light-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .portfolio-header {
+                padding: 30px 25px;
+            }
+
+            .portfolio-title {
+                font-size: 2.2rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+                justify-content: center;
+            }
+
+            .nav-link {
+                font-size: 0.95rem;
+                padding: 10px 18px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .footer-contact {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Portfolio Header -->
+        <div class="portfolio-header">
+            <h1 class="portfolio-title">Peterson Property Portfolio</h1>
+            <p class="portfolio-subtitle">Property Management Documentation</p>
+            
+            <div class="portfolio-meta">
+                <div class="meta-stat">
+                    <span class="meta-number">5</span>
+                    <span class="meta-label">Active Properties</span>
+                </div>
+                <div class="meta-stat">
+                    <span class="meta-number">12</span>
+                    <span class="meta-label">Project Types</span>
+                </div>
+                <div class="meta-stat">
+                    <span class="meta-number">150+</span>
+                    <span class="meta-label">Documentation Photos</span>
+                </div>
+                <div class="meta-stat">
+                    <span class="meta-number">2026</span>
+                    <span class="meta-label">Project Year</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="nav-links">
+                <a href="#current" class="nav-link active">Current Projects</a>
+                <a href="#completed" class="nav-link">Completed Projects</a>
+                <a href="#videos" class="nav-link">Project Videos</a>
+                <a href="#landscaping" class="nav-link">Landscaping Portfolio</a>
+            </div>
+        </nav>
+
+        <!-- Current Projects Section -->
+        <section id="current" class="section">
+            <div class="section-header">
+                <span class="section-icon">🏠</span>
+                <h2 class="section-title">Current Projects</h2>
+                <span class="section-subtitle">Active installations and assessments</span>
+            </div>
+            
+            <div class="project-grid">
+                <!-- 20 Peterson -->
+                <div class="project-card" onclick="location.href='20-peterson.html'">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <span class="project-placeholder-icon">❄️</span>
+                            <div>HVAC Installation</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-address">20 Peterson</h3>
+                        <div class="project-types">
+                            <span class="project-type-tag">Air Conditioning</span>
+                            <span class="project-type-tag">HVAC Installation</span>
+                        </div>
+                        <div class="project-status">
+                            <div class="status-dot status-completed"></div>
+                            <span class="status-text">Decision Process Phase</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-photos">15 Photos</span>
+                            <span class="project-date">April 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15 Peterson -->
+                <div class="project-card" onclick="location.href='15-peterson.html'">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <span class="project-placeholder-icon">🏡</span>
+                            <div>HVAC Assessment</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-address">15 Peterson</h3>
+                        <div class="project-types">
+                            <span class="project-type-tag">HVAC Assessment</span>
+                            <span class="project-type-tag">System Planning</span>
+                        </div>
+                        <div class="project-status">
+                            <div class="status-dot status-assessment"></div>
+                            <span class="status-text">Assessment Phase</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-photos">-- Photos</span>
+                            <span class="project-date">TBD 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 17 Peterson -->
+                <div class="project-card" onclick="location.href='17-peterson.html'">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <span class="project-placeholder-icon">🏡</span>
+                            <div>HVAC Assessment</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-address">17 Peterson</h3>
+                        <div class="project-types">
+                            <span class="project-type-tag">HVAC Assessment</span>
+                            <span class="project-type-tag">System Planning</span>
+                        </div>
+                        <div class="project-status">
+                            <div class="status-dot status-assessment"></div>
+                            <span class="status-text">Assessment Phase</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-photos">-- Photos</span>
+                            <span class="project-date">TBD 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 19 Peterson -->
+                <div class="project-card" onclick="location.href='19-peterson.html'">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <span class="project-placeholder-icon">🏡</span>
+                            <div>HVAC Assessment</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-address">19 Peterson</h3>
+                        <div class="project-types">
+                            <span class="project-type-tag">HVAC Assessment</span>
+                            <span class="project-type-tag">System Planning</span>
+                        </div>
+                        <div class="project-status">
+                            <div class="status-dot status-assessment"></div>
+                            <span class="status-text">Assessment Phase</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-photos">-- Photos</span>
+                            <span class="project-date">TBD 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 18 Simpson Lane - Multi-Project -->
+                <div class="project-card" onclick="location.href='18-simpson-lane.html'">
+                    <div class="project-image">
+                        <div class="project-placeholder">
+                            <span class="project-placeholder-icon">🔨</span>
+                            <div>Multi-Project Property</div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-address">18 Simpson Lane</h3>
+                        <div class="project-types">
+                            <span class="project-type-tag">Deck Replacement</span>
+                            <span class="project-type-tag">Window Installation</span>
+                            <span class="project-type-tag">Electrical Upgrades</span>
+                            <span class="project-type-tag">Exterior Painting</span>
+                            <span class="project-type-tag">HVAC Assessment</span>
+                        </div>
+                        <div class="project-status">
+                            <div class="status-dot status-progress"></div>
+                            <span class="status-text">Multiple Projects In Progress</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-photos">-- Photos</span>
+                            <span class="project-date">2026 Ongoing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Completed Projects Section -->
+        <section id="completed" class="section">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2 class="section-title">Completed Projects</h2>
+                <span class="section-subtitle">Finished installations and documentation</span>
+            </div>
+            
+            <div class="empty-section">
+                <div class="empty-icon">📁</div>
+                <div class="empty-title">No Completed Projects Yet</div>
+                <div class="empty-subtitle">Completed projects will be moved here as work finishes</div>
+            </div>
+        </section>
+
+        <!-- Project Videos Section -->
+        <section id="videos" class="section">
+            <div class="section-header">
+                <span class="section-icon">🎥</span>
+                <h2 class="section-title">Project Videos</h2>
+                <span class="section-subtitle">Time-lapse installations and walkthroughs</span>
+            </div>
+            
+            <div class="empty-section">
+                <div class="empty-icon">🎬</div>
+                <div class="empty-title">Video Documentation Coming Soon</div>
+                <div class="empty-subtitle">Installation time-lapse and before/after walkthroughs will be featured here</div>
+            </div>
+        </section>
+
+        <!-- Landscaping Portfolio Section -->
+        <section id="landscaping" class="section">
+            <div class="section-header">
+                <span class="section-icon">🌿</span>
+                <h2 class="section-title">Landscaping Portfolio</h2>
+                <span class="section-subtitle">Outdoor projects and property enhancement</span>
+            </div>
+            
+            <div class="empty-section">
+                <div class="empty-icon">🌳</div>
+                <div class="empty-title">Landscaping Projects Coming Soon</div>
+                <div class="empty-subtitle">Outdoor improvements and property enhancement documentation will be showcased here</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="portfolio-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Peterson Property Portfolio</h3>
+                    <p class="footer-tagline">Professional Property Management & Documentation</p>
+                    <p class="footer-description">Comprehensive project documentation for HVAC installations, property improvements, and ongoing maintenance across the Peterson Companies Maine property portfolio. All installations meet or exceed applicable building codes and manufacturer specifications.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Project Manager</h4>
+                    <p><strong>Dan Sheffer</strong></p>
+                    <p>Project Manager - The Peterson Companies</p>
+                    <p>717-377-3806</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Smooth scroll to section
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Update active nav link on scroll
+        window.addEventListener('scroll', function() {
+            let current = '';
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

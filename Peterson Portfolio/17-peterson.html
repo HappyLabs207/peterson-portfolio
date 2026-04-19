@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17 Peterson | Peterson Property Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #34495e;
+            --warm-blue: #5dade2;
+            --accent-gold: #f4f1de;
+            --warm-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --charcoal: #2c3e50;
+            --white: #ffffff;
+            --assessment-blue: #3498db;
+            --border-radius: 12px;
+            --shadow: 0 8px 25px rgba(52, 73, 94, 0.15);
+            --shadow-hover: 0 12px 40px rgba(52, 73, 94, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif Pro', serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--accent-gold) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .breadcrumb a {
+            color: var(--warm-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            margin: 0 10px;
+            color: var(--warm-gray);
+        }
+
+        .breadcrumb-current {
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+
+        /* Property Header */
+        .property-header {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 40px;
+            border-left: 6px solid var(--assessment-blue);
+        }
+
+        .property-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .property-subtitle {
+            font-size: 1.3rem;
+            color: var(--warm-gray);
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .status-banner {
+            background: var(--assessment-blue);
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .status-icon {
+            font-size: 1.5rem;
+        }
+
+        .status-text {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+        }
+
+        .property-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding-top: 25px;
+            border-top: 2px solid var(--light-gray);
+        }
+
+        .overview-item {
+            text-align: center;
+        }
+
+        .overview-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--assessment-blue);
+            display: block;
+        }
+
+        .overview-label {
+            font-size: 0.9rem;
+            color: var(--warm-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Assessment Info Section */
+        .assessment-info {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            color: var(--assessment-blue);
+        }
+
+        .assessment-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .detail-card {
+            background: var(--accent-gold);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--assessment-blue);
+        }
+
+        .detail-card h4 {
+            font-family: 'Space Mono', monospace;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .detail-card p {
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        .assessment-timeline {
+            background: var(--light-gray);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+        }
+
+        .timeline-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 20px;
+        }
+
+        .timeline-items {
+            display: grid;
+            gap: 15px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 8px;
+        }
+
+        .timeline-step {
+            background: var(--assessment-blue);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-task {
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 5px;
+        }
+
+        .timeline-description {
+            font-size: 0.9rem;
+            color: var(--warm-gray);
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 60px 40px;
+            text-align: center;
+            border: 3px dashed var(--light-gray);
+        }
+
+        .coming-soon-icon {
+            font-size: 4rem;
+            color: var(--assessment-blue);
+            margin-bottom: 20px;
+        }
+
+        .coming-soon-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--primary-navy);
+            margin-bottom: 15px;
+        }
+
+        .coming-soon-subtitle {
+            color: var(--warm-gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .property-footer {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .footer-info h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--assessment-blue);
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+
+        .footer-contact {
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 10px;
+            color: var(--assessment-blue);
+        }
+
+        .footer-contact p {
+            margin-bottom: 5px;
+            color: var(--light-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .property-header {
+                padding: 25px;
+            }
+
+            .property-title {
+                font-size: 2rem;
+            }
+
+            .assessment-details {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-contact {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="peterson-property-portfolio.html">Peterson Property Portfolio</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">17 Peterson</span>
+        </nav>
+
+        <!-- Property Header -->
+        <div class="property-header">
+            <h1 class="property-title">17 Peterson</h1>
+            <p class="property-subtitle">HVAC System Assessment & Planning</p>
+            
+            <div class="status-banner">
+                <span class="status-icon">📋</span>
+                <span class="status-text">Decision Process Phase</span>
+            </div>
+            
+            <div class="property-overview">
+                <div class="overview-item">
+                    <span class="overview-number">Assessment</span>
+                    <span class="overview-label">Current Phase</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-number">TBD</span>
+                    <span class="overview-label">Installation Date</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-number">2026</span>
+                    <span class="overview-label">Project Year</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-number">--</span>
+                    <span class="overview-label">Documentation Photos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assessment Information -->
+        <div class="assessment-info">
+            <h2 class="section-title">
+                <span class="section-icon">❄️</span>
+                HVAC Assessment Details
+            </h2>
+            
+            <div class="assessment-details">
+                <div class="detail-card">
+                    <h4>System Evaluation</h4>
+                    <p>Comprehensive assessment of current heating and cooling infrastructure, including evaluation of existing ductwork, electrical capacity, and structural considerations for optimal HVAC placement.</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h4>Load Calculations</h4>
+                    <p>Professional heat load and cooling load calculations to determine proper system sizing for maximum efficiency and comfort throughout all seasons.</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h4>Installation Planning</h4>
+                    <p>Development of detailed installation plans including unit placement recommendations, ductwork modifications, and integration with existing building systems.</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h4>Code Compliance</h4>
+                    <p>Verification that all proposed work meets current building codes, manufacturer specifications, and local permitting requirements for safe and compliant installation.</p>
+                </div>
+            </div>
+
+            <div class="assessment-timeline">
+                <h3 class="timeline-title">Assessment Process</h3>
+                <div class="timeline-items">
+                    <div class="timeline-item">
+                        <div class="timeline-step">1</div>
+                        <div class="timeline-content">
+                            <div class="timeline-task">Initial Property Survey</div>
+                            <div class="timeline-description">Room-by-room evaluation and measurement of spaces</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-step">2</div>
+                        <div class="timeline-content">
+                            <div class="timeline-task">System Sizing Calculations</div>
+                            <div class="timeline-description">Heat load and cooling load analysis for proper equipment selection</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-step">3</div>
+                        <div class="timeline-content">
+                            <div class="timeline-task">Installation Planning</div>
+                            <div class="timeline-description">Unit placement recommendations and integration planning</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-step">4</div>
+                        <div class="timeline-content">
+                            <div class="timeline-task">Documentation & Recommendations</div>
+                            <div class="timeline-description">Complete assessment report with installation specifications</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Section -->
+        <div class="coming-soon">
+            <div class="coming-soon-icon">📊</div>
+            <h3 class="coming-soon-title">Assessment Documentation Coming Soon</h3>
+            <p class="coming-soon-subtitle">
+                Detailed assessment photos, room-by-room recommendations, and system specifications will be published here upon completion of the evaluation process.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="property-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>17 Peterson Assessment Documentation</h3>
+                    <p class="footer-tagline">Professional HVAC System Evaluation</p>
+                    <p>Comprehensive assessment and planning documentation for HVAC system installation at 17 Peterson. All evaluations performed by qualified professionals with recommendations based on industry best practices and applicable building codes.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Project Manager</h4>
+                    <p><strong>Dan Sheffer</strong></p>
+                    <p>Project Manager - The Peterson Companies</p>
+                    <p>[Contact Information]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

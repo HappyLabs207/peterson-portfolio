@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18 Simpson Lane Projects | Peterson Property Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #34495e;
+            --warm-blue: #5dade2;
+            --accent-gold: #f4f1de;
+            --warm-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --charcoal: #2c3e50;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --progress-orange: #f39c12;
+            --assessment-blue: #3498db;
+            --border-radius: 12px;
+            --shadow: 0 8px 25px rgba(52, 73, 94, 0.15);
+            --shadow-hover: 0 12px 40px rgba(52, 73, 94, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif Pro', serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--accent-gold) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .breadcrumb a {
+            color: var(--warm-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            margin: 0 10px;
+            color: var(--warm-gray);
+        }
+
+        .breadcrumb-current {
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+
+        /* Property Header */
+        .property-header {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-left: 6px solid var(--warm-blue);
+        }
+
+        .property-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .property-subtitle {
+            font-size: 1.3rem;
+            color: var(--warm-gray);
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .property-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding-top: 25px;
+            border-top: 2px solid var(--light-gray);
+        }
+
+        .overview-item {
+            text-align: center;
+        }
+
+        .overview-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--warm-blue);
+            display: block;
+        }
+
+        .overview-label {
+            font-size: 0.9rem;
+            color: var(--warm-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Project Tabs */
+        .project-tabs {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .tab-header {
+            display: flex;
+            background: var(--light-gray);
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 20px 25px;
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--warm-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 4px solid transparent;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: var(--white);
+            color: var(--charcoal);
+        }
+
+        .tab-button.active {
+            background: var(--white);
+            color: var(--primary-navy);
+            border-bottom-color: var(--warm-blue);
+        }
+
+        .tab-status {
+            font-size: 0.75rem;
+            margin-left: 8px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .status-progress {
+            background: var(--progress-orange);
+            color: var(--white);
+        }
+
+        .status-assessment {
+            background: var(--assessment-blue);
+            color: var(--white);
+        }
+
+        .status-completed {
+            background: var(--success-green);
+            color: var(--white);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 40px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .project-intro {
+            background: var(--accent-gold);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 4px solid var(--warm-blue);
+        }
+
+        .project-intro h3 {
+            font-family: 'Space Mono', monospace;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .project-intro p {
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .photo-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .photo-placeholder {
+            height: 250px;
+            background: linear-gradient(135deg, var(--light-gray) 0%, #d5dbdb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--warm-gray);
+            border-bottom: 3px solid var(--warm-blue);
+        }
+
+        .photo-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .photo-caption {
+            padding: 25px;
+        }
+
+        .figure-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--warm-blue);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .caption-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .caption-description {
+            color: var(--charcoal);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Empty State for Tabs */
+        .empty-tab-content {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--warm-gray);
+        }
+
+        .empty-tab-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .empty-tab-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--charcoal);
+        }
+
+        .empty-tab-subtitle {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .property-footer {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .footer-info h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--warm-blue);
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+
+        .footer-contact {
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 10px;
+            color: var(--warm-blue);
+        }
+
+        .footer-contact p {
+            margin-bottom: 5px;
+            color: var(--light-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .property-header {
+                padding: 25px;
+            }
+
+            .property-title {
+                font-size: 2rem;
+            }
+
+            .tab-header {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                text-align: left;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-contact {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="peterson-property-portfolio.html">Peterson Property Portfolio</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">18 Simpson Lane</span>
+        </nav>
+
+        <!-- Property Header -->
+        <div class="property-header">
+            <h1 class="property-title">18 Simpson Lane</h1>
+            <p class="property-subtitle">Multi-Project Property Development & Renovation</p>
+            
+            <div class="property-overview">
+                <div class="overview-item">
+                    <span class="overview-number">5</span>
+                    <span class="overview-label">Active Projects</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-number">--</span>
+                    <span class="overview-label">Total Photos</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-number">2026</span>
+                    <span class="overview-label">Project Year</span>
+                </div>
+                <div class="overview-item">
+                    <span class="overview-number">Ongoing</span>
+                    <span class="overview-label">Timeline</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Tabs -->
+        <div class="project-tabs">
+            <div class="tab-header">
+                <button class="tab-button active" onclick="showTab('deck-replacement')">
+                    Deck Replacement
+                    <span class="tab-status status-progress">In Progress</span>
+                </button>
+                <button class="tab-button" onclick="showTab('windows')">
+                    Window Installation
+                    <span class="tab-status status-progress">In Progress</span>
+                </button>
+                <button class="tab-button" onclick="showTab('electrical')">
+                    Electrical Upgrades
+                    <span class="tab-status status-progress">In Progress</span>
+                </button>
+                <button class="tab-button" onclick="showTab('painting')">
+                    Exterior Painting
+                    <span class="tab-status status-progress">In Progress</span>
+                </button>
+                <button class="tab-button" onclick="showTab('hvac')">
+                    HVAC Assessment
+                    <span class="tab-status status-assessment">Assessment</span>
+                </button>
+            </div>
+
+            <!-- Deck Replacement Tab -->
+            <div id="deck-replacement" class="tab-content active">
+                <div class="project-intro">
+                    <h3>Deck Replacement Project</h3>
+                    <p>Complete replacement of existing deck structure with upgraded materials and improved safety features. Project includes foundation work, framing, decking installation, and finishing details.</p>
+                </div>
+
+                <div class="empty-tab-content">
+                    <span class="empty-tab-icon">🔨</span>
+                    <div class="empty-tab-title">Deck Replacement Documentation</div>
+                    <div class="empty-tab-subtitle">Photo documentation will be added as work progresses.<br>Check back for before/during/after photos and installation details.</div>
+                </div>
+            </div>
+
+            <!-- Window Installation Tab -->
+            <div id="windows" class="tab-content">
+                <div class="project-intro">
+                    <h3>Window Replacement Project</h3>
+                    <p>Systematic replacement of windows throughout the property with energy-efficient units. Includes removal of existing windows, preparation work, installation of new units, and interior/exterior finishing.</p>
+                </div>
+
+                <div class="empty-tab-content">
+                    <span class="empty-tab-icon">🪟</span>
+                    <div class="empty-tab-title">Window Installation Documentation</div>
+                    <div class="empty-tab-subtitle">Photo documentation will be added as work progresses.<br>Check back for room-by-room installation photos and specifications.</div>
+                </div>
+            </div>
+
+            <!-- Electrical Upgrades Tab -->
+            <div id="electrical" class="tab-content">
+                <div class="project-intro">
+                    <h3>Electrical System Upgrades</h3>
+                    <p>Comprehensive electrical system improvements including panel upgrades, new wiring, outlet installations, and safety enhancements. All work performed to current electrical codes and standards.</p>
+                </div>
+
+                <div class="empty-tab-content">
+                    <span class="empty-tab-icon">⚡</span>
+                    <div class="empty-tab-title">Electrical Upgrade Documentation</div>
+                    <div class="empty-tab-subtitle">Photo documentation will be added as work progresses.<br>Check back for panel upgrades, wiring work, and installation details.</div>
+                </div>
+            </div>
+
+            <!-- Exterior Painting Tab -->
+            <div id="painting" class="tab-content">
+                <div class="project-intro">
+                    <h3>Exterior Painting Project</h3>
+                    <p>Complete exterior painting including surface preparation, primer application, and finish coats. Project covers siding, trim, doors, and other exterior surfaces for weather protection and aesthetic enhancement.</p>
+                </div>
+
+                <div class="empty-tab-content">
+                    <span class="empty-tab-icon">🎨</span>
+                    <div class="empty-tab-title">Exterior Painting Documentation</div>
+                    <div class="empty-tab-subtitle">Photo documentation will be added as work progresses.<br>Check back for before/during/after photos and color selections.</div>
+                </div>
+            </div>
+
+            <!-- HVAC Assessment Tab -->
+            <div id="hvac" class="tab-content">
+                <div class="project-intro">
+                    <h3>HVAC System Assessment</h3>
+                    <p>Professional evaluation of heating, ventilation, and air conditioning requirements. Assessment includes load calculations, system sizing, placement recommendations, and installation planning for optimal comfort and efficiency.</p>
+                </div>
+
+                <div class="empty-tab-content">
+                    <span class="empty-tab-icon">❄️</span>
+                    <div class="empty-tab-title">HVAC Assessment Documentation</div>
+                    <div class="empty-tab-subtitle">Assessment documentation will be added upon completion.<br>Check back for room-by-room recommendations and system specifications.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="property-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>18 Simpson Lane Project Documentation</h3>
+                    <p class="footer-tagline">Multi-Project Property Development</p>
+                    <p>Comprehensive documentation of all renovation and improvement projects at 18 Simpson Lane. All work performed to applicable building codes and industry standards with professional oversight and quality control.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Project Manager</h4>
+                    <p><strong>Dan Sheffer</strong></p>
+                    <p>Project Manager - The Peterson Companies</p>
+                    <p>[Contact Information]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Smooth scrolling for tabs
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                setTimeout(() => {
+                    document.querySelector('.project-tabs').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

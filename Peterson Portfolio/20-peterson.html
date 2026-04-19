@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20 Milbury "Poolhouse" | Peterson Property Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #34495e;
+            --warm-blue: #5dade2;
+            --accent-gold: #f4f1de;
+            --warm-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --charcoal: #2c3e50;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --border-radius: 12px;
+            --shadow: 0 8px 25px rgba(52, 73, 94, 0.15);
+            --shadow-hover: 0 12px 40px rgba(52, 73, 94, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif Pro', serif;
+            line-height: 1.6;
+            color: var(--charcoal);
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--accent-gold) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .breadcrumb a {
+            color: var(--warm-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            margin: 0 10px;
+            color: var(--warm-gray);
+        }
+
+        .breadcrumb-current {
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+
+        /* Project Header */
+        .project-header {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 40px;
+            border-left: 6px solid var(--success-green);
+        }
+
+        .project-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: var(--warm-gray);
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .completion-banner {
+            background: var(--success-green);
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .completion-icon {
+            font-size: 1.5rem;
+        }
+
+        .completion-text {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+        }
+
+        .project-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid var(--light-gray);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .meta-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success-green);
+            margin-bottom: 5px;
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: var(--warm-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .photo-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-bottom: 3px solid var(--warm-blue);
+        }
+
+        .photo-caption {
+            padding: 25px;
+        }
+
+        .figure-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--warm-blue);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .caption-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .caption-description {
+            color: var(--charcoal);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 25px;
+            padding: 15px 25px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--warm-blue);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            color: var(--warm-blue);
+        }
+
+        /* Footer */
+        .project-footer {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .footer-info h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--success-green);
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+
+        .footer-contact {
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 10px;
+            color: var(--success-green);
+        }
+
+        .footer-contact p {
+            margin-bottom: 5px;
+            color: var(--light-gray);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox img {
+            width: 80vw;
+            height: 60vh;
+            max-width: 800px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            color: var(--primary-navy);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: var(--white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            color: var(--primary-navy);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--warm-blue);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .project-header {
+                padding: 25px;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-contact {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="peterson-property-portfolio.html">Peterson Property Portfolio</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">20 Milbury "Poolhouse"</span>
+        </nav>
+
+        <!-- Project Header -->
+        <div class="project-header">
+            <h1 class="project-title">20 Peterson</h1>
+            <p class="project-subtitle">Complete Air Conditioning Installation Documentation</p>
+            
+            <div class="completion-banner">
+                <span class="completion-icon">✅</span>
+                <span class="completion-text">Awating Decisions - Project Documentation</span>
+            </div>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <span class="meta-number">Dan Sheffer</span>
+                    <span class="meta-label">Project Manager</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-number">HVAC Installation</span>
+                    <span class="meta-label">Project Type</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-number">April 2026</span>
+                    <span class="meta-label">Completion Date</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-number">15 Images</span>
+                    <span class="meta-label">Documentation Photos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Third Floor -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🏠</span>
+                Third Floor
+            </h2>
+            <div class="photo-grid">
+                <div class="photo-item" onclick="openLightbox(1)">
+                    <img src="photo_01.jpg" alt="Figure 1">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 1</div>
+                        <div class="caption-title">Third Floor - View 1</div>
+                        <div class="caption-description">This room will be best served with a unit against the wall under the arched window.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(2)">
+                    <img src="photo_02.jpg" alt="Figure 2">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 2</div>
+                        <div class="caption-title">Third Floor - View 2</div>
+                        <div class="caption-description">Additional third floor installation details and configuration.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Second Floor -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🏠</span>
+                Second Floor
+            </h2>
+            <div class="photo-grid">
+                <div class="photo-item" onclick="openLightbox(3)">
+                    <img src="photo_03.jpg" alt="Figure 3">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 3</div>
+                        <div class="caption-title">Second Floor - View 1</div>
+                        <div class="caption-description">This room can get either a floor mounted unit or a wall mounted unit near the bed.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(4)">
+                    <img src="photo_04.jpg" alt="Figure 4">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 4</div>
+                        <div class="caption-title">Second Floor - View 2</div>
+                        <div class="caption-description">This room can either get a floor unit again against the wall under the windows or a wall unit above the bed.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(5)">
+                    <img src="photo_05.jpg" alt="Figure 5">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 5</div>
+                        <div class="caption-title">Second Floor - View 3</div>
+                        <div class="caption-description">Second floor installation details and configuration.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(6)">
+                    <img src="photo_06.jpg" alt="Figure 6">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 6</div>
+                        <div class="caption-title">Second Floor - View 4</div>
+                        <div class="caption-description">This room can get either a floor unit against the wall on the left or a wall unit above the bed.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(7)">
+                    <img src="photo_07.jpg" alt="Figure 7">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 7</div>
+                        <div class="caption-title">Second Floor - View 5</div>
+                        <div class="caption-description">Second floor ventilation and air distribution systems.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(8)">
+                    <img src="photo_08.jpg" alt="Figure 8">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 8</div>
+                        <div class="caption-title">Second Floor - View 6</div>
+                        <div class="caption-description">Second floor completed installation and final configuration.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Main Floor -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🏠</span>
+                Main Floor
+            </h2>
+            <div class="photo-grid">
+                <div class="photo-item" onclick="openLightbox(9)">
+                    <img src="photo_09.jpg" alt="Figure 9">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 9</div>
+                        <div class="caption-title">Main Floor - View 1</div>
+                        <div class="caption-description">Main floor installation work and system components.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(10)">
+                    <img src="photo_10.jpg" alt="Figure 10">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 10</div>
+                        <div class="caption-title">Main Floor - View 2</div>
+                        <div class="caption-description">Main floor ductwork and ventilation configuration.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(11)">
+                    <img src="photo_11.jpg" alt="Figure 11">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 11</div>
+                        <div class="caption-title">Main Floor - View 3</div>
+                        <div class="caption-description">Main floor installation details and final setup.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Basement -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🏠</span>
+                Basement
+            </h2>
+            <div class="photo-grid">
+                <div class="photo-item" onclick="openLightbox(12)">
+                    <img src="photo_12.jpg" alt="Figure 12">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 12</div>
+                        <div class="caption-title">Basement - View 1</div>
+                        <div class="caption-description">The wall behind this dresser is the best location for this bedroom.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(13)">
+                    <img src="photo_13.jpg" alt="Figure 13">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 13</div>
+                        <div class="caption-title">Basement - View 2</div>
+                        <div class="caption-description">This room can possibly get a floor mounted unit behind the dresser or under the Beach Stuff sign.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(14)">
+                    <img src="photo_14.jpg" alt="Figure 14">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 14</div>
+                        <div class="caption-title">Basement - View 3</div>
+                        <div class="caption-description">This room could get a floor unit under the shark or near the bed by the door.</div>
+                    </div>
+                </div>
+
+                <div class="photo-item" onclick="openLightbox(15)">
+                    <img src="photo_15.jpg" alt="Figure 15">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 15</div>
+                        <div class="caption-title">Basement - View 4</div>
+                        <div class="caption-description">This room could get a floor unit under the shark or near the bed by the door.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="project-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Awating Decisions</h3>
+                    <p class="footer-tagline">Professional HVAC Documentation</p>
+                    <p>This document provides a comprehensive photographic record of the completed air conditioning installation project for maintenance reference and warranty purposes. All work performed to applicable building codes and manufacturer specifications.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Project Manager</h4>
+                    <p><strong>Dan Sheffer</strong></p>
+                    <p>Project Manager - The Peterson Companies</p>
+                    <p>717-377-3806</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="close-btn" onclick="closeLightbox()">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-caption">
+                <h3 id="lightbox-caption-title">Caption Title</h3>
+                <p id="lightbox-caption-desc">Caption description</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const photoData = {
+            1: { title: "Third Floor - View 1", desc: "This room will be best served with a unit against the wall under the arched window." },
+            2: { title: "Third Floor - View 2", desc: "Additional third floor installation details and configuration." },
+            3: { title: "Second Floor - View 1", desc: "This room can get either a floor mounted unit or a wall mounted unit near the bed." },
+            4: { title: "Second Floor - View 2", desc: "This room can either get a floor unit again against the wall under the windows or a wall unit above the bed." },
+            5: { title: "Second Floor - View 3", desc: "Second floor installation details and configuration." },
+            6: { title: "Second Floor - View 4", desc: "This room can get either a floor unit against the wall on the left or a wall unit above the bed." },
+            7: { title: "Second Floor - View 5", desc: "Second floor ventilation and air distribution systems." },
+            8: { title: "Second Floor - View 6", desc: "Second floor completed installation and final configuration." },
+            9: { title: "Main Floor - View 1", desc: "Main floor installation work and system components." },
+            10: { title: "Main Floor - View 2", desc: "Main floor ductwork and ventilation configuration." },
+            11: { title: "Main Floor - View 3", desc: "Main floor installation details and final setup." },
+            12: { title: "Basement - View 1", desc: "The wall behind this dresser is the best location for this bedroom." },
+            13: { title: "Basement - View 2", desc: "This room can possibly get a floor mounted unit behind the dresser or under the Beach Stuff sign." },
+            14: { title: "Basement - View 3", desc: "This room could get a floor unit under the shark or near the bed by the door." },
+            15: { title: "Basement - View 4", desc: "This room could get a floor unit under the shark or near the bed by the door." }
+        };
+
+        function openLightbox(photoId) {
+            const data = photoData[photoId];
+            const lightboxImage = document.getElementById('lightbox-image');
+            lightboxImage.src = `photo_${photoId.toString().padStart(2, '0')}.jpg`;
+            lightboxImage.alt = `Figure ${photoId}`;
+            document.getElementById('lightbox-caption-title').textContent = data.title;
+            document.getElementById('lightbox-caption-desc').textContent = data.desc;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

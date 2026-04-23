@@ -249,33 +249,142 @@
             color: var(--warm-gray);
         }
 
-        /* Coming Soon Section */
-        .coming-soon {
+        /* Photo Grid - ADDED FROM WORKING MILBURY PAGE */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .photo-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-bottom: 3px solid var(--warm-blue);
+        }
+
+        .photo-caption {
+            padding: 25px;
+        }
+
+        .figure-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--warm-blue);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .caption-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .caption-description {
+            color: var(--charcoal);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Assessment Photos Section */
+        .assessment-photos {
             background: var(--white);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 60px 40px;
-            text-align: center;
-            border: 3px dashed var(--light-gray);
+            padding: 40px;
+            margin-bottom: 40px;
         }
 
-        .coming-soon-icon {
-            font-size: 4rem;
-            color: var(--assessment-blue);
+        /* Lightbox - ADDED FROM WORKING MILBURY PAGE */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox img {
+            width: 80vw;
+            height: 60vh;
+            max-width: 800px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
             margin-bottom: 20px;
         }
 
-        .coming-soon-title {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.5rem;
+        .lightbox-caption {
+            text-align: center;
             color: var(--primary-navy);
-            margin-bottom: 15px;
         }
 
-        .coming-soon-subtitle {
-            color: var(--warm-gray);
-            font-size: 1.1rem;
-            line-height: 1.6;
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: var(--white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            color: var(--primary-navy);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--warm-blue);
+            color: var(--white);
+            transform: scale(1.1);
         }
 
         /* Footer */
@@ -387,7 +496,7 @@
                     <span class="overview-label">Project Year</span>
                 </div>
                 <div class="overview-item">
-                    <span class="overview-number">--</span>
+                    <span class="overview-number">2</span>
                     <span class="overview-label">Documentation Photos</span>
                 </div>
             </div>
@@ -469,21 +578,63 @@
                     <img src="17_photo_01.jpg" alt="Figure 1">
                     <div class="photo-caption">
                         <div class="figure-number">Figure 1</div>
-                        <div class="caption-title">Ocean Side Bedroom AC has limited placement upstairs.  Possibly above the door in the loft space.</div>
-                        <div class="caption-description">Ocean Side Bedroom AC has limited placement upstairs.  Possibly above the door in the loft space.</div>
+                        <div class="caption-title">Ocean Side Bedroom AC Assessment</div>
+                        <div class="caption-description">Limited placement upstairs. Possibly above the door in the loft space.</div>
                     </div>
                 </div>
                 <div class="photo-item" onclick="openLightbox(2)">
                     <img src="17_photo_02.jpg" alt="Figure 2">
                     <div class="photo-caption">
                         <div class="figure-number">Figure 2</div>
-                        <div class="caption-title">Best spot for a floor wall unit.</div>
+                        <div class="caption-title">Floor Wall Unit Placement</div>
                         <div class="caption-description">Unit can go to the left or right of the slider.</div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="close-btn" onclick="closeLightbox()">×</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-caption">
+                <h3 id="lightbox-caption-title"></h3>
+                <p id="lightbox-caption-desc"></p>
+            </div>
         </div>
     </div>
+
+    <script>
+        // Photo data for lightbox
+        const photoData = {
+            1: { title: "Ocean Side Bedroom AC Assessment", desc: "Limited placement upstairs. Possibly above the door in the loft space." },
+            2: { title: "Floor Wall Unit Placement", desc: "Unit can go to the left or right of the slider." }
+        };
+
+        function openLightbox(photoId) {
+            const data = photoData[photoId];
+            const lightboxImage = document.getElementById('lightbox-image');
+            lightboxImage.src = `17_photo_${photoId.toString().padStart(2, '0')}.jpg`;
+            lightboxImage.alt = `Figure ${photoId}`;
+            document.getElementById('lightbox-caption-title').textContent = data.title;
+            document.getElementById('lightbox-caption-desc').textContent = data.desc;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>

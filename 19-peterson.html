@@ -249,33 +249,142 @@
             color: var(--warm-gray);
         }
 
-        /* Coming Soon Section */
-        .coming-soon {
+        /* Photo Grid - WORKING VERSION */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .photo-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-bottom: 3px solid var(--warm-blue);
+        }
+
+        .photo-caption {
+            padding: 25px;
+        }
+
+        .figure-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--warm-blue);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .caption-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .caption-description {
+            color: var(--charcoal);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Assessment Photos Section */
+        .assessment-photos {
             background: var(--white);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 60px 40px;
-            text-align: center;
-            border: 3px dashed var(--light-gray);
+            padding: 40px;
+            margin-bottom: 40px;
         }
 
-        .coming-soon-icon {
-            font-size: 4rem;
-            color: var(--assessment-blue);
+        /* Lightbox - WORKING VERSION */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox img {
+            width: 80vw;
+            height: 60vh;
+            max-width: 800px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
             margin-bottom: 20px;
         }
 
-        .coming-soon-title {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.5rem;
+        .lightbox-caption {
+            text-align: center;
             color: var(--primary-navy);
-            margin-bottom: 15px;
         }
 
-        .coming-soon-subtitle {
-            color: var(--warm-gray);
-            font-size: 1.1rem;
-            line-height: 1.6;
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: var(--white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            color: var(--primary-navy);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--warm-blue);
+            color: var(--white);
+            transform: scale(1.1);
         }
 
         /* Footer */
@@ -358,7 +467,7 @@
     <div class="container">
         <!-- Breadcrumb Navigation -->
         <nav class="breadcrumb">
-            <a href="peterson-property-portfolio.html">Peterson Property Portfolio</a>
+            <a href="index.html">Peterson Property Portfolio</a>
             <span class="breadcrumb-separator">›</span>
             <span class="breadcrumb-current">19 Peterson</span>
         </nav>
@@ -387,7 +496,7 @@
                     <span class="overview-label">Project Year</span>
                 </div>
                 <div class="overview-item">
-                    <span class="overview-number">--</span>
+                    <span class="overview-number">11</span>
                     <span class="overview-label">Documentation Photos</span>
                 </div>
             </div>
@@ -457,31 +566,157 @@
             </div>
         </div>
 
-        <!-- Coming Soon Section -->
-        <div class="coming-soon">
-            <div class="coming-soon-icon">📊</div>
-            <h3 class="coming-soon-title">Assessment Documentation Coming Soon</h3>
-            <p class="coming-soon-subtitle">
-                Detailed assessment photos, room-by-room recommendations, and system specifications will be published here upon completion of the evaluation process.
-            </p>
-        </div>
-
-        <!-- Footer -->
-        <div class="property-footer">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <h3>19 Peterson Assessment Documentation</h3>
-                    <p class="footer-tagline">Professional HVAC System Evaluation</p>
-                    <p>Comprehensive assessment and planning documentation for HVAC system installation at 19 Peterson. All evaluations performed by qualified professionals with recommendations based on industry best practices and applicable building codes.</p>
+        <!-- Photo Gallery Section -->
+        <div class="assessment-photos">
+            <h2 class="section-title">
+                <span class="section-icon">📸</span>
+                Assessment Documentation
+            </h2>
+            
+            <div class="photo-grid">
+                <div class="photo-item" onclick="openLightbox(1)">
+                    <img src="19_photo_02.jpg" alt="Figure 1">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 1</div>
+                        <div class="caption-title">RedSox Room</div>
+                        <div class="caption-description">AC unit can go up high on the wall</div>
+                    </div>
                 </div>
-                <div class="footer-contact">
-                    <h4>Project Manager</h4>
-                    <p><strong>Dan Sheffer</strong></p>
-                    <p>Project Manager - The Peterson Companies</p>
-                    <p>[Contact Information]</p>
+                <div class="photo-item" onclick="openLightbox(2)">
+                    <img src="19_photo_01.jpg" alt="Figure 2">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 2</div>
+                        <div class="caption-title">Sailboat room</div>
+                        <div class="caption-description">AC can go into the ceiling</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(3)">
+                    <img src="19_photo_05.jpg" alt="Figure 3">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 3</div>
+                        <div class="caption-title">Baby Room</div>
+                        <div class="caption-description">AC can go into the wall high or ceiling</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(4)">
+                    <img src="19_photo_03.jpg" alt="Figure 4">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 4</div>
+                        <div class="caption-title">Master 1</div>
+                        <div class="caption-description">AC can go high on the ceiling near the door</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(5)">
+                    <img src="19_photo_05.jpg" alt="Figure 5">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 5</div>
+                        <div class="caption-title">Baby Room</div>
+                        <div class="caption-description">AC can go into the wall high or ceiling</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(6)">
+                    <img src="19_photo_03_01.jpg" alt="Figure 6">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 6</div>
+                        <div class="caption-title">Second Shot</div>
+                        <div class="caption-description">Another potential location in the Master</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(7)">
+                    <img src="19_photo_04.jpg" alt="Figure 7">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 7</div>
+                        <div class="caption-title">First room after Master and Stairs</div>
+                        <div class="caption-description">AC can go high on the wall or ceiling</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(8)">
+                    <img src="19_photo_06.jpg" alt="Figure 8">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 8</div>
+                        <div class="caption-title">Second room after Master and Stairs</div>
+                        <div class="caption-description">AC can go high on the wall or ceiling</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(9)">
+                    <img src="19_photo_07.jpg" alt="Figure 9">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 9</div>
+                        <div class="caption-title">Second Master</div>
+                        <div class="caption-description">AC can go into the ceiling as a vent unit</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(10)">
+                    <img src="19_photo_Attic.jpg" alt="Figure 10">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 10</div>
+                        <div class="caption-title">Attic</div>
+                        <div class="caption-description">Attic</div>
+                    </div>
+                </div>
+                <div class="photo-item" onclick="openLightbox(11)">
+                    <img src="19_photo_Attic_1.jpg" alt="Figure 11">
+                    <div class="photo-caption">
+                        <div class="figure-number">Figure 11</div>
+                        <div class="caption-title">Attic</div>
+                        <div class="caption-description">Attic</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="close-btn" onclick="closeLightbox()">×</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-caption">
+                <h3 id="lightbox-caption-title"></h3>
+                <p id="lightbox-caption-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Photo data for lightbox
+        const photoData = {
+            1: { title: "RedSox Room", desc: "AC unit can go up high on the wall" },
+            2: { title: "Sailboat room", desc: "AC can go into the ceiling" },
+            3: { title: "Baby Room", desc: "AC can go into the wall high or ceiling" },
+            4: { title: "Master 1", desc: "AC can go high on the ceiling near the door" },
+            5: { title: "Baby Room", desc: "AC can go into the wall high or ceiling" },
+            6: { title: "Second Shot", desc: "Another potential location in the Master" },
+            7: { title: "First room after Master and Stairs", desc: "AC can go high on the wall or ceiling" },
+            8: { title: "Second room after Master and Stairs", desc: "AC can go high on the wall or ceiling" },
+            9: { title: "Second Master", desc: "AC can go into the ceiling as a vent unit" },
+            10: { title: "Attic", desc: "Attic" },
+            11: { title: "Attic", desc: "Attic" }
+        };
+
+        function openLightbox(photoId) {
+            const data = photoData[photoId];
+            const lightboxImage = document.getElementById('lightbox-image');
+            lightboxImage.src = `19_photo_${photoId.toString().padStart(2, '0')}.jpg`;
+            lightboxImage.alt = `Figure ${photoId}`;
+            document.getElementById('lightbox-caption-title').textContent = data.title;
+            document.getElementById('lightbox-caption-desc').textContent = data.desc;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>

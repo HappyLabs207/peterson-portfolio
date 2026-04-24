@@ -240,6 +240,14 @@
             box-shadow: var(--shadow-hover);
         }
 
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-bottom: 3px solid var(--warm-blue);
+        }
+
         .photo-placeholder {
             height: 250px;
             background: linear-gradient(135deg, var(--light-gray) 0%, #d5dbdb 100%);
@@ -282,6 +290,77 @@
             color: var(--charcoal);
             font-size: 1rem;
             line-height: 1.5;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox img {
+            width: 80vw;
+            height: 60vh;
+            max-width: 800px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            color: var(--primary-navy);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: var(--white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            color: var(--primary-navy);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--warm-blue);
+            color: var(--white);
+            transform: scale(1.1);
         }
 
         /* Empty State for Tabs */
@@ -458,10 +537,63 @@
                     <p>Complete replacement of existing deck structure with upgraded materials and improved safety features. Project includes foundation work, framing, decking installation, and finishing details.</p>
                 </div>
 
-                <div class="empty-tab-content">
-                    <span class="empty-tab-icon">🔨</span>
-                    <div class="empty-tab-title">Deck Replacement Documentation</div>
-                    <div class="empty-tab-subtitle">Photo documentation will be added as work progresses.<br>Check back for before/during/after photos and installation details.</div>
+                <div class="photo-grid">
+                    <div class="photo-item" onclick="openLightbox(1)">
+                        <img src="18_Simpson_01.jpg" alt="Deck Construction - View 1">
+                        <div class="photo-caption">
+                            <div class="figure-number">Figure 1</div>
+                            <div class="caption-title">Deck Construction - View 1</div>
+                            <div class="caption-description">Construction documentation</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" onclick="openLightbox(2)">
+                        <img src="18_Simpson_02.jpg" alt="Deck Construction - View 2">
+                        <div class="photo-caption">
+                            <div class="figure-number">Figure 2</div>
+                            <div class="caption-title">Deck Construction - View 2</div>
+                            <div class="caption-description">Construction documentation</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" onclick="openLightbox(3)">
+                        <img src="18_Simpson_03.jpg" alt="Deck Construction - View 3">
+                        <div class="photo-caption">
+                            <div class="figure-number">Figure 3</div>
+                            <div class="caption-title">Deck Construction - View 3</div>
+                            <div class="caption-description">Construction documentation</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" onclick="openLightbox(4)">
+                        <img src="18_Simpson_04.jpg" alt="Deck Construction - View 4">
+                        <div class="photo-caption">
+                            <div class="figure-number">Figure 4</div>
+                            <div class="caption-title">Deck Construction - View 4</div>
+                            <div class="caption-description">Construction documentation</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" onclick="openLightbox(5)">
+                        <img src="18_Simpson_05.jpg" alt="Deck Construction - View 5">
+                        <div class="photo-caption">
+                            <div class="figure-number">Figure 5</div>
+                            <div class="caption-title">Deck Construction - View 5</div>
+                            <div class="caption-description">Construction documentation</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" onclick="openLightbox(6)">
+                        <img src="18_Simpson_06.jpg" alt="Deck Construction - View 6">
+                        <div class="photo-caption">
+                            <div class="figure-number">Figure 6</div>
+                            <div class="caption-title">Deck Construction - View 6</div>
+                            <div class="caption-description">Construction documentation</div>
+                        </div>
+                    </div>
+                    <div class="photo-item" onclick="openLightbox(7)">
+                        <img src="18_Simpson_07.jpg" alt="Deck Construction - View 7">
+                        <div class="photo-caption">
+                            <div class="figure-number">Figure 7</div>
+                            <div class="caption-title">Deck Construction - View 7</div>
+                            <div class="caption-description">Construction documentation</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -540,6 +672,18 @@
         </div>
     </div>
 
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="close-btn" onclick="closeLightbox()">×</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-caption">
+                <h3 id="lightbox-caption-title"></h3>
+                <p id="lightbox-caption-desc"></p>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showTab(tabName) {
             // Hide all tab contents
@@ -569,6 +713,40 @@
                     });
                 }, 100);
             });
+        });
+
+        // Lightbox functionality
+        const photoData = {
+            1: { title: "Deck Construction - View 1", desc: "Construction documentation" },
+            2: { title: "Deck Construction - View 2", desc: "Construction documentation" },
+            3: { title: "Deck Construction - View 3", desc: "Construction documentation" },
+            4: { title: "Deck Construction - View 4", desc: "Construction documentation" },
+            5: { title: "Deck Construction - View 5", desc: "Construction documentation" },
+            6: { title: "Deck Construction - View 6", desc: "Construction documentation" },
+            7: { title: "Deck Construction - View 7", desc: "Construction documentation" }
+        };
+
+        function openLightbox(photoId) {
+            const data = photoData[photoId];
+            const lightboxImage = document.getElementById('lightbox-image');
+            lightboxImage.src = `18_Simpson_${photoId.toString().padStart(2, '0')}.jpg`;
+            lightboxImage.alt = `Deck Construction - View ${photoId}`;
+            document.getElementById('lightbox-caption-title').textContent = data.title;
+            document.getElementById('lightbox-caption-desc').textContent = data.desc;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
         });
     </script>
 </body>
